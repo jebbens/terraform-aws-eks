@@ -300,8 +300,10 @@ resource "aws_eks_access_policy_association" "this" {
 ################################################################################
 
 module "kms" {
-  source  = "terraform-aws-modules/kms/aws"
-  version = "2.1.0" # Note - be mindful of Terraform/provider version compatibility between modules
+  # The Terraform Public Registry is not available in isolated Regions, thus the source must be modified for a mirrored repository.
+  # source  = "terraform-aws-modules/kms/aws"
+  # version = "2.1.0" # Note - be mindful of Terraform/provider version compatibility between modules
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-kms.git?ref=v2.1.0"
 
   create = local.create && var.create_kms_key && local.enable_cluster_encryption_config # not valid on Outposts
 
